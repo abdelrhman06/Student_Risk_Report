@@ -2,9 +2,19 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-self_paced = pd.read_excel("Self_Paced_progress.xlsx")
-connect = pd.read_excel("Connect_session_attendance.xlsx")
-physical = pd.read_excel("Summer_intake_-PS_Progress.xlsx")
+st.title("Student Risk Dashboard")
+
+self_paced_file = st.file_uploader("Upload Self Paced Progress file", type=["xlsx"])
+connect_file = st.file_uploader("Upload Connect Session Attendance file", type=["xlsx"])
+physical_file = st.file_uploader("Upload Physical Session file", type=["xlsx"])
+
+if self_paced_file and connect_file and physical_file:
+    self_paced = pd.read_excel(self_paced_file)
+    connect = pd.read_excel(connect_file)
+    physical = pd.read_excel(physical_file)
+
+    # كمل الكود عادي من هنا...
+
 
 connect_start = pd.to_datetime("2025-02-07")
 connect_end = pd.to_datetime("2025-03-22")
