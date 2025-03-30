@@ -2,11 +2,22 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-st.title("Student Risk Dashboard")
+st.set_page_config(page_title="📊 Student Risk Dashboard", layout="wide")
 
-self_paced_file = st.file_uploader("Upload Self Paced Progress file", type=["xlsx"])
-connect_file = st.file_uploader("Upload Connect Session Attendance file", type=["xlsx"])
-physical_file = st.file_uploader("Upload Physical Session file", type=["xlsx"])
+st.markdown("<h1 style='text-align: center;'>📚 Student Engagement & Risk Tracker</h1>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center; color: gray;'>Monitor attendance, course progress, and identify at-risk students with ease</h4>", unsafe_allow_html=True)
+st.markdown("---")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    self_paced_file = st.file_uploader("📝 Upload Self Paced Progress file", type=["xlsx"])
+
+with col2:
+    connect_file = st.file_uploader("📡 Upload Connect Session Attendance file", type=["xlsx"])
+
+with col3:
+    physical_file = st.file_uploader("🏫 Upload Physical Session file", type=["xlsx"])
 
 if self_paced_file and connect_file and physical_file:
     self_paced = pd.read_excel(self_paced_file)
@@ -88,10 +99,12 @@ if self_paced_file and connect_file and physical_file:
 
     summary_df = pd.DataFrame([summary]).T.reset_index().rename(columns={"index": "Category", 0: "Count"})
 
+    st.markdown("---")
     st.subheader("📊 Detailed Student Progress")
-    st.dataframe(merged)
+    st.dataframe(merged, use_container_width=True)
 
     st.subheader("📈 Summary Report")
-    st.dataframe(summary_df)
+    st.dataframe(summary_df, use_container_width=True)
+
 else:
-    st.warning("Please upload all 3 required Excel files to proceed.")
+    st.warning("⚠️ Please upload all 3 required Excel files to proceed.")
